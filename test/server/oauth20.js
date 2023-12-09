@@ -1,15 +1,15 @@
 var oauth20 = require('./../../lib');
 
 // Define methods
-module.exports = function(type) {
-    var obj = new oauth20({log: {level: 4}});
+module.exports = function (type) {
+    var obj = new oauth20({ log: { level: 4 } });
 
     var model = require('./model/' + type).oauth2;
     if (!model)
         throw new Error('Unknown model type: ' + type);
 
     // Redefine oauth20 abstract methods
-    
+
     // Set client methods
     obj.model.client.getId = model.client.getId;
     obj.model.client.getRedirectUri = model.client.getRedirectUri;
@@ -51,7 +51,7 @@ module.exports = function(type) {
     obj.model.code.checkTTL = model.code.getScope;
 
     // Decision controller
-    obj.decision = function(req, res, client, scope, user) {
+    obj.decision = function (req, res, client, scope, user) {
         var html = [
             'Currently your are logged with id = ' + req.oauth2.model.user.getId(user),
             'Client with id ' + req.oauth2.model.client.getId(client) + ' asks for access',
